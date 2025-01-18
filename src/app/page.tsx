@@ -49,9 +49,9 @@ export default function Home() {
           <div className="font-semibold text-3xl text-teal-950">
             Agam Pad 📝
           </div>
-          <div className="mt-8 rounded-xl overflow-hidden w-full">
+          <div className="bg-gray-800 border-2 mt-4 border-gray-400 py-2 px-3 hover:bg-gray-700 w-fit rounded-full cursor-pointer" onClick={addNewNote}>New Note ➕</div>
+          <div className="mt-4 rounded-xl overflow-hidden w-full">
             <div className="flex flex-col w-full h-full">
-              <div className="bg-gray-800 border-2 border-gray-400 py-2 px-3 hover:bg-gray-700 w-fit rounded-full cursor-pointer" onClick={addNewNote}>New Note ➕</div>
               {
                 notes.map(({ title }, idx) => (
                   <div
