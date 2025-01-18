@@ -10,7 +10,7 @@ type Note = {
 type Notes = Array<Note>;
 
 export default function Home() {
-  const [notes, setNotes] = useState<Notes>([{ title: "Test 1", content: "Content 1" }, { title: "Test 2", content: "Content 2" }]);
+  const [notes, _setNotes] = useState<Notes>([{ title: "Test 1", content: "Content 1" }, { title: "Test 2", content: "Content 2" }]);
   const [activeNote, setActiveNote] = useState<number>();
   return (
     <div className="h-screen w-screen p-10 bg-teal-800">
