@@ -1,6 +1,6 @@
 "use client"
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { Note } from "../lib/types";
 
 const NotePreview = ({
@@ -15,6 +15,8 @@ const NotePreview = ({
     const [title, setTitle] = useState(initTitle);
     const [content, setContent] = useState(initContent);
 
+    const saveButtonRef = useRef<HTMLDivElement>(null);
+
     const handleEditTitle = (evt: ChangeEvent<HTMLInputElement>) => {
         const inputValue = evt.target.value;
         setTitle(inputValue);
@@ -28,7 +30,9 @@ const NotePreview = ({
     const updateNote = () => {
         saveChanges({
             title, content
-        })
+        });
+        alert("Your changes have been saved! 😆");
+        saveButtonRef.current?.blur();
     }
     return (
         <div className="w-full h-full flex flex-col gap-5 p-5 items-end">
@@ -42,6 +46,7 @@ const NotePreview = ({
                 onChange={handleEditContent}
             />
             <div
+                ref={saveButtonRef}
                 className="flex justify-center items-center w-fit cursor-pointer bg-teal-400 text-black hover:bg-teal-200 rounded-full border-4 border-teal-400 hover:border-white px-4 py-3 font-semibold"
                 onClick={updateNote}
             >
