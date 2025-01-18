@@ -31,8 +31,8 @@ const NotePreview = ({
         saveChanges({
             title, content
         });
-        alert("Your changes have been saved! 😆");
         saveButtonRef.current?.blur();
+        alert("Your changes have been saved! 😆");
     }
     return (
         <div className="w-full h-full flex flex-col gap-5 p-5 items-end">
