@@ -21,8 +21,8 @@ export default function Home() {
   }
   return (
     <div className="h-screen w-screen p-10 bg-teal-800">
-      <div className="bg-teal-950 rounded-2xl w-full h-full overflow-hidden flex flex-row">
-        <div className="w-1/4 h-full bg-white bg-opacity-25 flex flex-col px-4 py-5 justify-start items-center">
+      <div className="bg-teal-950 rounded-2xl w-full h-full overflow-hidden flex flex-col md:flex-row">
+        <div className="w-full md:w-1/4 h-fit md:h-full bg-white bg-opacity-25 flex flex-col px-4 py-5 justify-start items-center">
           <div className="font-semibold text-3xl text-teal-950">
             Agam Pad 📝
           </div>
@@ -41,7 +41,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="w-3/4 h-full">
+        <div className="w-full md:w-3/4 h-full">
           {
             activeNote !== undefined && (
               <NotePreview
