@@ -8,6 +8,7 @@ const NOTE_LABEL = "agampad-x-notes-data";
 
 export default function Home() {
   const [notes, setNotes] = useState<Notes>(() => {
+    if (typeof window === "undefined") return [];
     const notesFromLocalStorage = localStorage.getItem(NOTE_LABEL);
     if (notesFromLocalStorage) {
       return JSON.parse(notesFromLocalStorage);
