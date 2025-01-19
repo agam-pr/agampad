@@ -7,18 +7,19 @@ import { Note, Notes } from "./lib/types";
 const NOTE_LABEL = "agampad-x-notes-data";
 
 export default function Home() {
-  const [notes, setNotes] = useState<Notes>(() => {
-    if (typeof window === "undefined") return [];
-    const notesFromLocalStorage = localStorage.getItem(NOTE_LABEL);
-    if (notesFromLocalStorage) {
-      return JSON.parse(notesFromLocalStorage);
-    }
-    return [];
-  });
+  const [notes, setNotes] = useState<Notes>([]);
   const [activeNote, setActiveNote] = useState<number>();
 
   useEffect(() => {
-    localStorage.setItem(NOTE_LABEL, JSON.stringify(notes));
+    const notesFromLocalStorage = localStorage.getItem(NOTE_LABEL);
+    if (notesFromLocalStorage) {
+      setNotes(JSON.parse(notesFromLocalStorage));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (notes.length)
+      localStorage.setItem(NOTE_LABEL, JSON.stringify(notes));
   }, [notes]);
 
   const updateActiveNote = (note: Note) => {
@@ -37,10 +38,19 @@ export default function Home() {
     const newNoteTitle = prompt("Enter new note's title:");
     if (newNoteTitle) {
       const updatedNotes = [...notes];
-      updatedNotes.push({title: newNoteTitle, content: ""});
+      updatedNotes.push({ title: newNoteTitle, content: "" });
       setNotes(updatedNotes);
     } else {
       alert("Note title cannot be empty bhai ji! 🤬")
+    }
+  }
+
+  const deleteNoteAt = (idx: number) => () => {
+    const updatedNotes = notes.filter((_, index) => index !== idx);
+    setNotes(updatedNotes);
+
+    if (activeNote === idx) {
+      setActiveNote(undefined);
     }
   }
   return (
@@ -59,8 +69,16 @@ export default function Home() {
                     key={title}
                     onClick={() => setActiveNote(idx)}
                     className={`cursor-pointer border-white ${activeNote === idx ? "bg-teal-600 text-2xl" : "bg-teal-800"
-                      } hover:bg-teal-500 w-full p-3 transition-all duration-500`}
-                  >{title}</div>
+                      } hover:bg-teal-500 w-full p-3 transition-all duration-300 flex flex-row justify-between`}
+                  >
+                    <span className="h-full flex items-center transition-all duration-300">{title}</span>
+                    <span
+                      className="bg-red-200 border-2 border-red-700 p-1 rounded-full text-sm hover:bg-red-400 aspect-square h-full flex justify-center items-center"
+                      onClick={deleteNoteAt(idx)}
+                    >
+                      ❌
+                    </span>
+                  </div>
                 ))
               }
             </div>
@@ -68,7 +86,7 @@ export default function Home() {
         </div>
         <div className="w-full md:w-3/4 h-full">
           {
-            activeNote !== undefined && (
+            activeNote !== undefined && activeNote < notes.length && (
               <NotePreview
                 key={activeNote}
                 initTitle={notes[activeNote].title}
