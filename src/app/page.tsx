@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import NotePreview from "./components/NotePreview";
 import { Note, Notes } from "./lib/types";
+import Image from "next/image";
 
 const NOTE_LABEL = "agampad-x-notes-data";
 
@@ -53,6 +54,12 @@ export default function Home() {
       setActiveNote(undefined);
     }
   }
+
+  const copyNoteAt = (idx: number) => async () => {
+    const { title, content } = notes[idx];
+    await navigator.clipboard.writeText(`${title}\n\n${content}`);
+    alert(`Note ${idx + 1} has been copied.`)
+  }
   return (
     <div className="h-screen w-screen p-10 bg-teal-800">
       <div className="bg-teal-950 rounded-2xl w-full h-full overflow-hidden flex flex-col md:flex-row">
@@ -72,12 +79,26 @@ export default function Home() {
                       } hover:bg-teal-500 w-full p-3 transition-all duration-300 flex flex-row justify-between`}
                   >
                     <span className="h-full flex items-center transition-all duration-300">{title}</span>
-                    <span
-                      className="bg-red-200 border-2 border-red-700 p-1 rounded-full text-sm hover:bg-red-400 aspect-square h-full flex justify-center items-center"
-                      onClick={deleteNoteAt(idx)}
-                    >
-                      ❌
-                    </span>
+                    <div className="flex flex-row gap-2">
+                      <span
+                        className="bg-gray-200 border-2 border-gray-700 p-1 rounded-full text-sm hover:bg-gray-400 aspect-square h-full flex justify-center items-center"
+                        onClick={copyNoteAt(idx)}
+                      >
+                        <Image
+                          alt="copy-note"
+                          src="/icons/copy.png"
+                          width={20}
+                          height={20}
+                          className="h-4/5 w-4/5 object-cover"
+                        />
+                      </span>
+                      <span
+                        className="bg-red-200 border-2 border-red-700 p-1 rounded-full text-sm hover:bg-red-400 aspect-square h-full flex justify-center items-center"
+                        onClick={deleteNoteAt(idx)}
+                      >
+                        ❌
+                      </span>
+                    </div>
                   </div>
                 ))
               }
