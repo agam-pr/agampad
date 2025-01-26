@@ -64,10 +64,10 @@ export default function Home() {
     <div className="h-screen w-screen p-10 bg-teal-800">
       <div className="bg-teal-950 rounded-2xl w-full h-full overflow-hidden flex flex-col md:flex-row">
         <div className="w-full md:w-1/4 h-fit md:h-full bg-white bg-opacity-25 flex flex-col px-4 py-5 justify-start items-center">
-          <div className="font-semibold text-3xl text-teal-950">
-            Agam Pad 📝
+          <div className="font-semibold text-3xl bg-gradient-to-bl from-teal-950 via-teal-900 to-teal-950 bg-clip-text">
+            <span className="text-transparent">Agam Pad</span> 📝
           </div>
-          <div className="bg-gray-800 border-2 mt-4 border-gray-400 py-2 px-3 hover:bg-gray-700 w-fit rounded-full cursor-pointer" onClick={addNewNote}>New Note ➕</div>
+          <div className="bg-gray-800 border-2 mt-4 font-mono border-gray-400 py-2 px-3 hover:bg-gradient-to-tr hover:from-gray-800 hover:via-gray-700 hover:to-gray-950 hover:shadow-lg shadow-teal-950 duration-300 transition-shadow w-fit rounded-full cursor-pointer" onClick={addNewNote}>New Note ➕</div>
           <div className="mt-4 rounded-xl overflow-hidden w-full">
             <div className="flex flex-col w-full h-full">
               {

@@ -41,7 +41,7 @@ const NotePreview = ({
                 <div className="h-[2px] bg-white w-0 transition-all duration-300 peer-focus:w-full" />
             </div>
             <textarea
-                className="w-full h-full outline-none bg-white bg-opacity-10 p-3 rounded-md resize-none"
+                className="w-full h-full outline-none bg-white font-mono bg-opacity-10 p-3 rounded-md resize-none"
                 value={content}
                 onChange={handleEditContent}
             />
