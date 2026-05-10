@@ -14,7 +14,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Premium Glassmorphism styling helpers */
 .glass {
   background: rgba(10, 13, 22, 0.65);
   backdrop-filter: blur(16px);
@@ -42,7 +41,6 @@ body {
   box-shadow: 0 0 25px rgba(124, 58, 237, 0.15);
 }
 
-/* Custom scrollbars for high end feel */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -57,4 +55,3 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(124, 58, 237, 0.4);
 }
-
