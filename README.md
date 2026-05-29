@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Agam Pad
 
-## Getting Started
+Agam Pad is a tiny local-first notebook for quick thoughts, class notes, and random brain dumps.
 
-First, run the development server:
+I built it to feel simple on purpose: open it, write stuff, close it, and your notes are still there when you come back.
+
+## Why I made this
+
+Most note apps feel too heavy for the kind of writing I do every day. I wanted something that felt lightweight, private, and easy to keep open in a browser tab without getting in the way.
+
+## What it does right now
+
+- Local-first note storage using the browser, so your notes stay on your device.
+- Add, edit, and delete notes from a clean split-screen layout.
+- Copy any note quickly with one click.
+- Save changes manually when you are done editing.
+- Keep everything inside one simple notebook instead of juggling multiple screens.
+
+## What I want this to become
+
+These are the ideas I would love to add next:
+
+- Session-based locking so the notebook feels safer when multiple tabs are open.
+- Markdown support for nicer formatting and better writing flow.
+- Encryption and decryption for notes, so private writing feels even more private.
+- A stronger private notebook experience that still stays local-first.
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org)
+- React
+- TypeScript
+- Tailwind CSS
+
+## Run Locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [src/app/page.tsx](src/app/page.tsx) contains the notebook UI and local storage logic.
+- [src/app/components/NotePreview.tsx](src/app/components/NotePreview.tsx) handles the note editor.
+- [src/app/lib/types.ts](src/app/lib/types.ts) defines the note shape used across the app.
 
-## Learn More
+## Small Note
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is still pretty small and very handmade, which I kind of like. It is not trying to be a huge production app yet. It is just a cozy notebook with room to grow.
