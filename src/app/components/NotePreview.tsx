@@ -1,59 +1,88 @@
 "use client"
 
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { Note } from "../lib/types";
+import { Save } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const MDEditor = dynamic(
+  () => import("@uiw/react-md-editor").then((mod) => mod.default),
+  { ssr: false }
+);
+
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+
+interface NotePreviewProps {
+  initTitle: string;
+  initContent: string;
+  saveChanges: (note: Note) => void;
+}
 
 const NotePreview = ({
-    initTitle,
-    initContent,
-    saveChanges
-}: {
-    initTitle: string,
-    initContent: string,
-    saveChanges: (note: Note) => void,
-}) => {
-    const [title, setTitle] = useState(initTitle);
-    const [content, setContent] = useState(initContent);
+  initTitle,
+  initContent,
+  saveChanges
+}: NotePreviewProps) => {
+  const [title, setTitle] = useState(initTitle);
+  const [content, setContent] = useState(initContent || "");
 
-    const saveButtonRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    setTitle(initTitle);
+    setContent(initContent || "");
+  }, [initTitle, initContent]);
 
-    const handleEditTitle = (evt: ChangeEvent<HTMLInputElement>) => {
-        const inputValue = evt.target.value;
-        setTitle(inputValue);
-    }
+  const handleEditTitle = (evt: ChangeEvent<HTMLInputElement>) => {
+    setTitle(evt.target.value);
+  };
 
-    const handleEditContent = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-        const inputValue = evt.target.value;
-        setContent(inputValue);
-    }
+  const updateNote = () => {
+    saveChanges({
+      title,
+      content
+    });
+  };
 
-    const updateNote = () => {
-        saveChanges({
-            title, content
-        });
-        saveButtonRef.current?.blur();
-        alert("Your changes have been saved! 😆");
-    }
-    return (
-        <div className="w-full h-full flex flex-col gap-5 p-5 items-end">
-            <div className="flex flex-col gap-2 w-full">
-                <input className="w-full outline-none peer bg-transparent text-5xl font-semibold" value={title} onChange={handleEditTitle} />
-                <div className="h-[2px] bg-white w-0 transition-all duration-300 peer-focus:w-full" />
-            </div>
-            <textarea
-                className="w-full h-full outline-none bg-white font-mono bg-opacity-10 p-3 rounded-md resize-none"
-                value={content}
-                onChange={handleEditContent}
-            />
-            <div
-                ref={saveButtonRef}
-                className="flex justify-center items-center w-fit cursor-pointer bg-teal-400 text-black hover:bg-teal-200 rounded-full border-4 border-teal-400 hover:border-white px-4 py-3 font-semibold"
-                onClick={updateNote}
-            >
-                Save Changes
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="w-full h-full flex flex-col gap-6 p-6 md:p-8 text-white min-h-0">
+      
+      <div className="flex flex-col gap-2 w-full">
+        <input
+          type="text"
+          className="w-full outline-none bg-transparent text-4xl md:text-5xl font-extrabold tracking-tight text-white placeholder-white/20 border-b border-white/10 pb-4 focus:border-cyber-purple transition-all duration-300"
+          value={title}
+          onChange={handleEditTitle}
+          placeholder="Untitled Note"
+        />
+      </div>
+
+      <div 
+        className="flex-1 w-full overflow-hidden rounded-2xl border border-cyber-border bg-cyber-dark/40 shadow-inner flex flex-col min-h-0 focus-within:border-cyber-purple/50 focus-within:shadow-[0_0_20px_rgba(124,58,237,0.1)] transition-all duration-300" 
+        data-color-mode="dark"
+      >
+        <MDEditor
+          value={content}
+          onChange={(val) => setContent(val || "")}
+          height="100%"
+          preview="edit"
+          hideToolbar={false}
+          className="flex-1 border-0 bg-transparent text-white"
+        />
+      </div>
+
+      <div className="flex justify-end items-center">
+        <button
+          onClick={updateNote}
+          type="button"
+          className="flex items-center gap-2 cursor-pointer bg-cyber-purple hover:bg-cyber-purple/80 text-white font-semibold rounded-xl px-6 py-3 border border-cyber-purple/30 shadow-[0_4px_12px_rgba(124,58,237,0.25)] hover:shadow-[0_4px_20px_rgba(124,58,237,0.45)] hover:scale-[1.02] active:scale-95 duration-200 transition-all"
+        >
+          <Save className="w-4 h-4" />
+          <span>Save Changes</span>
+        </button>
+      </div>
+
+    </div>
+  );
+};
 
 export default NotePreview;
